@@ -1,0 +1,24 @@
+{
+  "name": "chat_system_bk_driver",
+  "version": "1.0.0",
+  "description": "sub-real time chat system backend driver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://rishavbhowmiktgs@bitbucket.org/rishavbhowmiktgs/chat_system_bk_driver.git"
+  },
+  "keywords": [
+    "rishav",
+    "tgs",
+    "chat"
+  ],
+  "author": "Rishav Bhowmik",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/rishavbhowmiktgs/chat_system_bk_driver#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
