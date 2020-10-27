@@ -10,11 +10,11 @@ SendMessage.send_message('123456', '1233456', message)
 .catch(err => console.error(err))
 */
 
-GetMessage.get_messages_bothway_time_after('1233456', Math.floor(Date.now()/1000) - 200000)
+//GetMessage.get_messages_bothway_time_after('1233456', Math.floor(Date.now()/1000) - 200000)
 /*.then(result => console.log(result))
 .catch(err => console.error(err))
-
-GetMessage.get_messages_bothway_pleanty('1233456', 5)*/
+*/
+GetMessage.get_messages_bothway_pleanty('1233456', 5)
 .then(result => console.log( 
     result,
     result.map((message_row)=>{

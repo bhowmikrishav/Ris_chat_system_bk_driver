@@ -40,11 +40,11 @@ class GetMessage extends Messanger{
             .then((conn)=>{
                 conn.query(`
                     SELECT * FROM ${GetMessage.MESSAGE_TABLE}
-                    WHERE sender_id = '${reciver_id}'
-                    OR   reciver_id = '${reciver_id}'
-                    AND   sent_at   > ${time_after_in_sec}
+                    WHERE sender_id = ?
+                    OR   reciver_id = ?
+                    AND   sent_at   > ?
                     ORDER BY _id DESC;
-                `, (err, result)=>{
+                `, [reciver_id, reciver_id, time_after_in_sec], (err, result)=>{
                         try{
                             conn.end()
                             if(err){
@@ -66,10 +66,10 @@ class GetMessage extends Messanger{
             .then((conn)=>{
                 conn.query(`
                     SELECT * FROM ${GetMessage.MESSAGE_TABLE}
-                    WHERE sender_id = '${reciver_id}'
-                    OR   reciver_id = '${reciver_id}'
-                    ORDER BY _id DESC LIMIT ${pleanty_means};
-                `, (err, result)=>{
+                    WHERE sender_id = ?
+                    OR   reciver_id = ?
+                    ORDER BY _id DESC LIMIT ?;
+                `, [reciver_id, reciver_id, pleanty_means], (err, result)=>{
                         try{
                             conn.end()
                             if(err){
