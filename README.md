@@ -1,29 +1,19 @@
-# README #
+# Chat system backend driver
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## MessageObject
 
-### What is this repository for? ###
+#### Components
+- `time`    : `<time in milli-seconds>`
+- `lines`   : `<Array<Buffer>>`
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+#### Buffer Pattern
+Request{
+    h :`{send_at_ms:<time in milli-seconds>, buffer_map:<Arrar<Number<Unsigned Integer>>>}`,
+    b :`line[0]buffer`+`line[1]buffer`+`line[2]buffer`+...
+}
 
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+```
+    {
+        
+    }
+```

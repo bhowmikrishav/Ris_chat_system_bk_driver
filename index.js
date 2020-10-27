@@ -1,5 +1,27 @@
-const message = require('./operations/message')
+const {GetMessage, SendMessage, MessageObject} = require('./operations/message')
 
-message.SendMessage.send_message('123456', '1233456', Buffer.from("Hi all"))
+
+const message = new MessageObject()
+message.add_line({type:'text'}, "Hello index")
+message.add_line({type:'file', key:'A.B.C', preview_mime_type:false})
+/*
+SendMessage.send_message('123456', '1233456', message)
 .then(result => console.log(result))
-.then(err => console.error(err))
+.catch(err => console.error(err))
+*/
+
+GetMessage.get_messages_bothway_time_after('1233456', Math.floor(Date.now()/1000) - 200000)
+/*.then(result => console.log(result))
+.catch(err => console.error(err))
+
+GetMessage.get_messages_bothway_pleanty('1233456', 5)*/
+.then(result => console.log( 
+    result,
+    result.map((message_row)=>{
+        message_row.data = new MessageObject(message_row.data)
+        return message_row
+    })[0].data.get_all_lines()
+ ))
+.catch(err => console.error(err))
+
+module.exports = {SendMessage, MessageObject}
