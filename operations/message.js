@@ -40,8 +40,8 @@ class GetMessage extends Messanger{
             .then((conn)=>{
                 conn.query(`
                     SELECT * FROM ${GetMessage.MESSAGE_TABLE}
-                    WHERE sender_id = ?
-                    OR   reciver_id = ?
+                    WHERE 
+                    ( sender_id = ?   OR   reciver_id = ? )
                     AND   sent_at   > ?
                     ORDER BY _id DESC;
                 `, [reciver_id, reciver_id, time_after_in_sec], (err, result)=>{
@@ -66,10 +66,84 @@ class GetMessage extends Messanger{
             .then((conn)=>{
                 conn.query(`
                     SELECT * FROM ${GetMessage.MESSAGE_TABLE}
-                    WHERE sender_id = ?
-                    OR   reciver_id = ?
+                    WHERE ( sender_id = ?   OR   reciver_id = ? )
                     ORDER BY _id DESC LIMIT ?;
                 `, [reciver_id, reciver_id, pleanty_means], (err, result)=>{
+                        try{
+                            conn.end()
+                            if(err){
+                                reject(err); return
+                            }
+                            resolve(result)
+                        }catch(e){reject(e)}
+                    }
+                )
+            })
+            .catch((e)=>{
+                reject(e)
+            })
+        })
+    }
+    static get_messages_bothway_post_id(reciver_id, post_id, limit = 500){
+        return new Promise((resolve, reject)=>{
+            GetMessage.create_conn()
+            .then((conn)=>{
+                conn.query(`
+                    SELECT * FROM ${GetMessage.MESSAGE_TABLE}
+                    WHERE ( sender_id = ?   OR   reciver_id = ? )
+                    AND  _id > ?
+                    ORDER BY _id DESC LIMIT ?;
+                `, [reciver_id, reciver_id, post_id, limit], (err, result)=>{
+                        try{
+                            conn.end()
+                            if(err){
+                                reject(err); return
+                            }
+                            resolve(result)
+                        }catch(e){reject(e)}
+                    }
+                )
+            })
+            .catch((e)=>{
+                reject(e)
+            })
+        })
+    }
+    static get_messages_bothway_range_id(reciver_id, from_id, to_id, limit = 1000){
+        return new Promise((resolve, reject)=>{
+            GetMessage.create_conn()
+            .then((conn)=>{
+                conn.query(`
+                    SELECT * FROM ${GetMessage.MESSAGE_TABLE}
+                    WHERE ( sender_id = ?   OR   reciver_id = ? )
+                    AND  _id > ?
+                    AND  _id < ?
+                    ORDER BY _id DESC LIMIT ?;
+                `, [reciver_id, reciver_id, from_id, to_id, limit], (err, result)=>{
+                        try{
+                            conn.end()
+                            if(err){
+                                reject(err); return
+                            }
+                            resolve(result)
+                        }catch(e){reject(e)}
+                    }
+                )
+            })
+            .catch((e)=>{
+                reject(e)
+            })
+        })
+    }
+    static get_messages_bothway_pleanty_of_sender(reciver_id, sender_id, pleanty_means){
+        return new Promise((resolve, reject)=>{
+            GetMessage.create_conn()
+            .then((conn)=>{
+                conn.query(`
+                    SELECT * FROM ${GetMessage.MESSAGE_TABLE}
+                    WHERE ( sender_id = ?   OR   reciver_id = ? )
+                    ORDER BY _id DESC LIMIT ?;
+                `, [sender_id, reciver_id, pleanty_means], (err, result)=>{
                         try{
                             conn.end()
                             if(err){
