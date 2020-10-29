@@ -190,7 +190,7 @@ class GetMessage extends Messanger{
             })
         })
     }
-    static get_messages_bothway_range_id_of_sender(reciver_id, sender_id, post_id, limit = 500){
+    static get_messages_bothway_range_id_of_sender(reciver_id, sender_id, from_id, to_id, limit = 500){
         return new Promise((resolve, reject)=>{
             GetMessage.create_conn()
             .then((conn)=>{
@@ -201,8 +201,9 @@ class GetMessage extends Messanger{
                         OR ( reciver_id = ?   AND   sender_id = ? )
                     )
                     AND  _id > ?
+                    AND  _id < ?
                     ORDER BY _id DESC LIMIT ?;
-                `, [sender_id, reciver_id, sender_id, reciver_id, post_id, limit], (err, result)=>{
+                `, [sender_id, reciver_id, sender_id, reciver_id, from_id, to_id, limit], (err, result)=>{
                         try{
                             conn.end()
                             if(err){
