@@ -141,9 +141,12 @@ class GetMessage extends Messanger{
             .then((conn)=>{
                 conn.query(`
                     SELECT * FROM ${GetMessage.MESSAGE_TABLE}
-                    WHERE ( sender_id = ?   OR   reciver_id = ? )
+                    WHERE ( 
+                        ( sender_id = ?   AND   reciver_id = ? )
+                        OR ( reciver_id = ?   AND   sender_id = ? )
+                    )
                     ORDER BY _id DESC LIMIT ?;
-                `, [sender_id, reciver_id, pleanty_means], (err, result)=>{
+                `, [sender_id, reciver_id, sender_id, reciver_id, pleanty_means], (err, result)=>{
                         try{
                             conn.end()
                             if(err){
@@ -159,6 +162,35 @@ class GetMessage extends Messanger{
             })
         })
     }
+    static get_messages_bothway_post_id_of_sender(reciver_id, sender_id, post_id, limit = 500){
+        return new Promise((resolve, reject)=>{
+            GetMessage.create_conn()
+            .then((conn)=>{
+                conn.query(`
+                    SELECT * FROM ${GetMessage.MESSAGE_TABLE}
+                    WHERE ( 
+                        ( sender_id = ?   AND   reciver_id = ? )
+                        OR ( reciver_id = ?   AND   sender_id = ? )
+                    )
+                    AND  _id > ?
+                    ORDER BY _id DESC LIMIT ?;
+                `, [sender_id, reciver_id, sender_id, reciver_id, post_id, limit], (err, result)=>{
+                        try{
+                            conn.end()
+                            if(err){
+                                reject(err); return
+                            }
+                            resolve(result)
+                        }catch(e){reject(e)}
+                    }
+                )
+            })
+            .catch((e)=>{
+                reject(e)
+            })
+        })
+    }
+
 }
 
 module.exports = {GetMessage, SendMessage, MessageObject}
