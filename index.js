@@ -16,8 +16,11 @@ const {GetMessage, SendMessage, MessageObject} = require('./operations/message')
 //GetMessage.get_messages_bothway_range_id('1233456', 2, 4 )
 //GetMessage.get_messages_bothway_pleanty_of_sender('1233456', '123456', 2)
 //GetMessage.get_messages_bothway_post_id_of_sender('1233456', '123456', 3)
-//GetMessage.get_messages_bothway_range_id_of_sender('1233456', '123456', 0, 6)
-//GetMessage.
+//GetMessage.get_messages_bothway_range_id_of_sender('1233456', '123456', 0, 3)
+//GetMessage.get_messages_oneway_pleanty_of_sender('1233456', '123456', 3)
+//GetMessage.get_messages_oneway_post_id_of_sender('1233456', '123456', 3)
+//GetMessage.get_messages_oneway_range_id_of_sender('1233456', '123456', 4)
+/*
 .then(result => console.log( 
     result.length,
     JSON.stringify({   _id:result[0]._id, sender_id:result[0].sender_id, reciver_id:result[0].reciver_id,
@@ -29,5 +32,5 @@ const {GetMessage, SendMessage, MessageObject} = require('./operations/message')
     })
  ))
 .catch(err => console.error(err))
-
+*/
 module.exports = {GetMessage, SendMessage, MessageObject}
